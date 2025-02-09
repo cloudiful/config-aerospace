@@ -57,11 +57,11 @@ preset = 'qwerty'
 #                 See: https://nikitabobko.github.io/AeroSpace/guide#assign-workspaces-to-monitors
 [gaps]
 inner.horizontal = 8
-inner.vertical =   8
-outer.left =       8
-outer.bottom =     8
-outer.top =        8
-outer.right =      8
+inner.vertical = 8
+outer.left = 8
+outer.bottom = 8
+outer.top = 8
+outer.right = 8
 
 # 'main' binding mode declaration
 # See: https://nikitabobko.github.io/AeroSpace/guide#binding-modes
@@ -93,6 +93,9 @@ outer.right =      8
 # end tell'
 # '''
 
+# toggle floating tiling
+alt-f = 'layout floating tiling'
+
 # See: https://nikitabobko.github.io/AeroSpace/commands#layout
 alt-slash = 'layout tiles horizontal vertical'
 alt-comma = 'layout accordion horizontal vertical'
@@ -121,11 +124,12 @@ alt-4 = 'workspace 4'
 alt-5 = 'workspace 5'
 
 # See: https://nikitabobko.github.io/AeroSpace/commands#move-node-to-workspace
-alt-shift-1 = 'move-node-to-workspace 1'
-alt-shift-2 = 'move-node-to-workspace 2'
-alt-shift-3 = 'move-node-to-workspace 3'
-alt-shift-4 = 'move-node-to-workspace 4'
-alt-shift-5 = 'move-node-to-workspace 5'
+# Move node to workspace and switch to that workspace
+alt-shift-1 = ['move-node-to-workspace 1', 'workspace 1']
+alt-shift-2 = ['move-node-to-workspace 2', 'workspace 2']
+alt-shift-3 = ['move-node-to-workspace 3', 'workspace 3']
+alt-shift-4 = ['move-node-to-workspace 4', 'workspace 4']
+alt-shift-5 = ['move-node-to-workspace 5', 'workspace 5']
 
 # See: https://nikitabobko.github.io/AeroSpace/commands#workspace-back-and-forth
 alt-tab = 'workspace-back-and-forth'
@@ -140,7 +144,10 @@ alt-shift-semicolon = 'mode service'
 [mode.service.binding]
 esc = ['reload-config', 'mode main']
 r = ['flatten-workspace-tree', 'mode main'] # reset layout
-f = ['layout floating tiling', 'mode main'] # Toggle between floating and tiling layout
+f = [
+    'layout floating tiling',
+    'mode main',
+] # Toggle between floating and tiling layout
 backspace = ['close-all-windows-but-current', 'mode main']
 
 # sticky is not yet supported https://github.com/nikitabobko/AeroSpace/issues/2
@@ -156,22 +163,51 @@ alt-shift-l = ['join-with right', 'mode main']
 # shift-down = ['volume set 0', 'mode main']
 
 # use 'aerospace list-apps' CLI command to get IDs of running applications
-[[on-window-detected]]
-    if.app-id = 'com.github.wez.wezterm'
-    run = ['move-node-to-workspace 1']
 
+# finder
 [[on-window-detected]]
-    if.app-id = 'com.apple.ActivityMonitor'
-    run = ['layout floating']
+if.app-id = 'com.apple.finder'
+run = ['layout floating']
 
+# Activity Monitor
 [[on-window-detected]]
-    if.app-id = 'dev.zed.Zed'
-    run = ['move-node-to-workspace 2']
+if.app-id = 'com.apple.ActivityMonitor'
+run = ['layout floating']
 
-[[on-window-detected]]
-    if.app-id = 'com.tencent.xinWeChat'
-    run = ['layout floating', 'move-node-to-workspace 3']
+# Workspace 1
 
+# wezterm
 [[on-window-detected]]
-    if.app-id = 'com.tencent.qq'
-    run = ['layout floating', 'move-node-to-workspace 3']
+if.app-id = 'com.github.wez.wezterm'
+run = ['move-node-to-workspace 1']
+
+
+# Workspace2
+
+# Zed Editor
+[[on-window-detected]]
+if.app-id = 'dev.zed.Zed'
+run = ['move-node-to-workspace 2']
+
+# VsCodium
+[[on-window-detected]]
+if.app-id = 'com.vscodium'
+run = ['move-node-to-workspace 2']
+
+
+# Workspace 3
+
+# iMessage
+[[on-window-detected]]
+if.app-id = 'com.apple.MobileSMS'
+run = ['layout floating', 'move-node-to-workspace 3']
+
+# WeChat
+[[on-window-detected]]
+if.app-id = 'com.tencent.xinWeChat'
+run = ['layout floating', 'move-node-to-workspace 3']
+
+# Tencent QQ
+[[on-window-detected]]
+if.app-id = 'com.tencent.qq'
+run = ['layout floating', 'move-node-to-workspace 3']
